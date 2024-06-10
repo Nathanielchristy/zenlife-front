@@ -31,7 +31,7 @@ export const DashList = () => {
         {/* <Table.Column dataIndex="_id" title="ID" /> */}
         <Table.Column dataIndex="clientname" title="Client Name" />
         <Table.Column dataIndex="jobname" title="Job Name" />
-        <Table.Column dataIndex="invoiceno" title="Invoice Number" />
+        {/* <Table.Column dataIndex="invoiceno" title="Invoice Number" /> */}
         <Table.Column dataIndex="jobstatus" title="Job Status" />
         <Table.Column
           dataIndex="createdAt"
