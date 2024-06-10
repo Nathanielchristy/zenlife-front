@@ -131,13 +131,13 @@ function App() {
                     icon: <UserOutlined />,
                   },
                 },
-                {
-                  name: "dashboard",
-                  list: "/dashboard",
-                  meta: {
-                    icon: <DashboardOutlined />, // Add an icon if desired
-                  },
-                },
+                // {
+                //   name: "dashboard",
+                //   list: "/dashboard",
+                //   meta: {
+                //     icon: <DashboardOutlined />, // Add an icon if desired
+                //   },
+                // },
               ]}
               options={{
                 liveMode: "auto",
@@ -170,12 +170,12 @@ function App() {
                     </Authenticated>
                   }
                 >
-                  <Route
+                  {/* <Route
                     element={<NavigateToResource resource="dashboard" />}
                   />
                   <Route path="/dashboard">
                     <Route index element={<DashList />} />
-                  </Route>
+                  </Route> */}
                   <Route path="*" element={<ErrorComponent />} />
                   <Route
                     index
