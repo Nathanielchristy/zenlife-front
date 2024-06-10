@@ -1,47 +1,152 @@
 import {
-  DateField,
-  MarkdownField,
-  NumberField,
-  Show,
-  TextField,
-} from "@refinedev/antd";
+  Card,
+  Col,
+  Descriptions,
+  Row,
+  Space,
+  Typography,
+  Grid,
+  Steps,
+  Popover,
+} from "antd";
+import {
+  ClockCircleOutlined,
+  BarcodeOutlined,
+  UserOutlined,
+  TeamOutlined,
+  GlobalOutlined,
+  FileMarkdownOutlined,
+  CheckCircleOutlined,
+  LoadingOutlined,
+  CloseCircleOutlined,
+} from "@ant-design/icons";
 import { useShow } from "@refinedev/core";
-import { Typography } from "antd";
+import { useMemo } from "react";
+import dayjs from "dayjs";
 
 const { Title } = Typography;
+// const { Step } = Steps;
 
 export const JobShow = () => {
   const { queryResult } = useShow({});
   const { data, isLoading } = queryResult;
-
   const record = data?.data;
+  const breakpoints = Grid.useBreakpoint();
 
+  const details = useMemo(() => {
+    const list = [
+      {
+        icon: <UserOutlined />,
+        title: "Client Name",
+        description: record?.clientname,
+      },
+      {
+        icon: <BarcodeOutlined />,
+        title: "Job Name",
+        description: record?.jobname,
+      },
+      {
+        icon: <BarcodeOutlined />,
+        title: "Invoice Number",
+        description: record?.invoiceno,
+      },
+      {
+        icon: <UserOutlined />,
+        title: "Sales Coordinator",
+        description: record?.salescoordinator,
+      },
+      {
+        icon: <UserOutlined />,
+        title: "Designer",
+        description: record?.designer,
+      },
+      {
+        icon: <UserOutlined />,
+        title: "Production Supervisor",
+        description: record?.productionsupervisor,
+      },
+      {
+        icon: <UserOutlined />,
+        title: "Printer Name",
+        description: record?.printername,
+      },
+      {
+        icon: <UserOutlined />,
+        title: "Site Coordinator",
+        description: record?.sitecoordinator,
+      },
+      {
+        icon: <TeamOutlined />,
+        title: "Installation Team",
+        description: record?.installationteam,
+      },
+      {
+        icon: <GlobalOutlined />,
+        title: "Site Location",
+        description: record?.sitelocation,
+      },
+      {
+        icon: <FileMarkdownOutlined />,
+        title: "Description",
+        description: record?.description,
+      },
+    ];
+    return list;
+  }, [record]);
+
+  const statusValues = useMemo(
+    () => [
+      "Assigned",
+      "File preperation",
+      "File sent for printing",
+      "Printing",
+      "Ready for Production",
+      "Ready for Delivery",
+      "Ready for Site",
+      "Completed",
+    ],
+    []
+  );
+
+  const currentStatusIndex = useMemo(
+    () => statusValues.indexOf(record?.jobstatus),
+    [record?.jobstatus, statusValues]
+  );
+
+  const items = statusValues.map((status, index) => ({
+    title: status,
+    description: record?.jobstatus === status ? `Job ${record?.jobstatus}` : "",
+  }));
   return (
-    <Show isLoading={isLoading}>
-      <Title level={5}>{"Client Name"}</Title>
-      <TextField value={record?.clientname} />
-      <Title level={5}>{"Job Name"}</Title>
-      <TextField value={record?.jobname} />
-      <Title level={5}>{"Invoice Number"}</Title>
-      <NumberField value={record?.invoiceno} />
-      <Title level={5}>{"Sales Coordinator"}</Title>
-      <TextField value={record?.salescoordinator} />
-      <Title level={5}>{"Designer"}</Title>
-      <TextField value={record?.designer} />
-      <Title level={5}>{"Production Supervisor"}</Title>
-      <TextField value={record?.productionsupervisor} />
-      <Title level={5}>{"Printer Name"}</Title>
-      <TextField value={record?.printername} />
-      <Title level={5}>{"Site Coordinator"}</Title>
-      <TextField value={record?.sitecoordinator} />
-      <Title level={5}>{"Installation Team"}</Title>
-      <TextField value={record?.installationteam} />
-      <Title level={5}>{"Site Location"}</Title>
-      <TextField value={record?.sitelocation} />
-      <Title level={5}>{"Description"}</Title>
-      <MarkdownField value={record?.description} />
-      <Title level={5}>{"Job Status"}</Title>
-      <TextField value={record?.jobstatus} />
-    </Show>
+    <Card loading={isLoading} style={{ margin: "24px" }}>
+      <Title level={4}>Job Details</Title>
+      <Row gutter={24}>
+        <Col span={16}>
+          <Descriptions bordered column={1}>
+            {details.map((item, index) => (
+              <Descriptions.Item
+                key={index}
+                label={
+                  <Space>
+                    {item.icon}
+                    {item.title}
+                  </Space>
+                }
+              >
+                {item.description}
+              </Descriptions.Item>
+            ))}
+          </Descriptions>
+        </Col>
+        <Col span={8} style={{ padding: "30px" }}>
+          <Steps
+            current={currentStatusIndex}
+            progressDot
+            direction="vertical"
+            items={items}
+          ></Steps>
+        </Col>
+      </Row>
+    </Card>
   );
 };

@@ -6,17 +6,17 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export const JobEdit = () => {
-  const { formProps, saveButtonProps, queryResult, formLoading } = useForm({});
-  const { pathname } = useLocation();
-  const [id, setId] = useState<string | null>(null);
-  const { mutate } = useUpdate();
+  interface IStatus {
+    _id: string;
+    status: string;
+  }
+  const { formProps, saveButtonProps, formLoading } = useForm({});
 
-  useEffect(() => {
-    const extractedId = pathname.split("/").pop();
-    if (extractedId) {
-      setId(extractedId);
-    }
-  }, []);
+  const { queryResult } = useSelect<IStatus>({
+    resource: "jobstatus",
+  });
+
+  const status = queryResult?.data?.data || [];
 
   return (
     <Edit saveButtonProps={saveButtonProps} isLoading={formLoading}>
@@ -175,15 +175,13 @@ export const JobEdit = () => {
             },
           ]}
         >
-          <Select
-            defaultValue={"Unassigned"}
-            options={[
-              { value: "Unassigned", label: "Unassigned" },
-              { value: "assigned", label: "Assigned" },
-              { value: "Complete", label: "Complete" },
-            ]}
-            style={{ width: 120 }}
-          />
+          <Select defaultValue="Unassigned" style={{ width: "20%" }}>
+            {status.map((s) => (
+              <Select.Option key={s._id} value={s.status}>
+                {s.status}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
       </Form>
     </Edit>

@@ -39,18 +39,10 @@ export const authProvider: AuthBindings = {
       });
       const { token, ...userData } = response.data;
       localStorage.setItem(TOKEN_KEY, token);
+      localStorage.setItem("Username", response.data.name);
       sessionStorage.setItem("userRole", userData.role);
       useRoleStore.getState().setRole(userData.role);
-      // Establish socket connection after successful login
-      // const socket = io(backendMainURL, {
-      //   auth: {
-      //     token,
-      //   },
-      //   query: {
-      //     userId: userData._id, // Use userData._id as the socket ID
-      //   },
-      // });
-      // localStorage.setItem(SOCKET_KEY, JSON.stringify(socket));
+      console.log(response.data);
       return {
         success: true,
         redirectTo: "/",

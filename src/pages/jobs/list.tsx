@@ -9,9 +9,10 @@ import {
 
 import { Space, Table } from "antd";
 import { IUser } from "../../interfaces";
-import { BaseRecord, useGetIdentity } from "@refinedev/core";
+import { BaseRecord, useGetIdentity, useNavigation } from "@refinedev/core";
 
 export const JobList = () => {
+  const { show } = useNavigation();
   const { data: user } = useGetIdentity<IUser>();
   const { tableProps } = useTable({
     syncWithLocation: true,
@@ -31,9 +32,10 @@ export const JobList = () => {
         }}
       >
         {/* <Table.Column dataIndex="_id" title="ID" /> */}
+        <Table.Column dataIndex="jobcardnumber" title="Job Card Number" />
         <Table.Column dataIndex="clientname" title="Client Name" />
         <Table.Column dataIndex="jobname" title="Job Name" />
-        <Table.Column dataIndex="invoiceno" title="Invoice Number" />
+
         <Table.Column dataIndex="jobstatus" title="Job Status" />
         <Table.Column
           dataIndex="createdAt"

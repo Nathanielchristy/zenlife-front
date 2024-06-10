@@ -52,14 +52,8 @@ import { adapter, model } from "./accessControls";
 import useRoleStore from "./store";
 import { DashList } from "./pages/dashboard";
 
-// import { io } from "socket.io-client";
-// import { liveProvider } from "./liveprovider";
-// const socket = io("http://localhost:5000", { withCredentials: true });
-
 import { liveProvider } from "@refinedev/ably";
 import { ablyClient } from "./utility/ablyClient";
-
-// import { liveProvider, socketClient } from "./liveProvider";
 
 const API_URL = "http://localhost:5000/api";
 
@@ -144,17 +138,6 @@ function App() {
                     icon: <DashboardOutlined />, // Add an icon if desired
                   },
                 },
-                // {
-                //   name: "notifications",
-                //   list: "/notifications",
-                //   // Assuming no create, edit, or delete operations are needed for notifications
-                //   // If there are specific actions, you can add them similarly to other resources
-                //   meta: {
-                //     canDelete: false, // Example, adjust according to your needs
-                //     // You can also specify an icon for the notifications resource
-                //     icon: <BellOutlined />, // Make sure to import BellOutlined from '@ant-design/icons'
-                //   },
-                // },
               ]}
               options={{
                 liveMode: "auto",
