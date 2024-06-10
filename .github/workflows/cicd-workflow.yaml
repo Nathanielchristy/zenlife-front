@@ -23,7 +23,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Pull image from Docker Hub
-        run: ocker pull natztheking/zenlife-reactjs-app:latest
+        run: docker pull natztheking/zenlife-reactjs-app:latest
       - name: Delete old container
         run: docker rm -f reactjs-app-container || true
       - name: Run Docker Container
