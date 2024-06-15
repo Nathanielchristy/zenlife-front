@@ -7,27 +7,19 @@ import {
   Typography,
   Grid,
   Steps,
-  Popover,
-  List,
 } from "antd";
 import {
-  ClockCircleOutlined,
-  BarcodeOutlined,
   UserOutlined,
+  BarcodeOutlined,
   TeamOutlined,
   GlobalOutlined,
   FileMarkdownOutlined,
-  CheckCircleOutlined,
-  LoadingOutlined,
-  CloseCircleOutlined,
 } from "@ant-design/icons";
 import { useShow } from "@refinedev/core";
 import { useMemo } from "react";
-import dayjs from "dayjs";
 import { Show } from "@refinedev/antd";
 
 const { Title } = Typography;
-// const { Step } = Steps;
 
 export const JobShow = () => {
   const { queryResult } = useShow({});
@@ -99,7 +91,7 @@ export const JobShow = () => {
   const statusValues = useMemo(
     () => [
       "Job Created",
-      "File preperation",
+      "File preparation",
       "File sent for printing",
       "Printing",
       "Ready for Production",
@@ -119,13 +111,14 @@ export const JobShow = () => {
     title: status,
     // description: record?.jobstatus === status ? `Job ${record?.jobstatus}` : "",
   }));
+
   return (
     <Show>
       <Card loading={isLoading} style={{ margin: "24px" }}>
         <Title level={4}>Job Details</Title>
         <Row gutter={24}>
-          <Col span={16}>
-            <Descriptions bordered column={1}>
+          <Col xs={24} lg={16}>
+            <Descriptions bordered={breakpoints.lg} column={1}>
               {details.map((item, index) => (
                 <Descriptions.Item
                   key={index}
@@ -135,19 +128,20 @@ export const JobShow = () => {
                       {item.title}
                     </Space>
                   }
+                  style={{ flexDirection: breakpoints.xs ? "column" : "row" }}
                 >
                   <Col>{item.description}</Col>
                 </Descriptions.Item>
               ))}
             </Descriptions>
           </Col>
-          <Col span={8} style={{ padding: "30px" }}>
+          <Col xs={24} lg={8} style={{ padding: "30px" }}>
             <Steps
               current={currentStatusIndex}
               progressDot
-              direction="vertical"
+              direction={breakpoints.xs ? "horizontal" : "vertical"}
               items={items}
-            ></Steps>
+            />
           </Col>
         </Row>
       </Card>
