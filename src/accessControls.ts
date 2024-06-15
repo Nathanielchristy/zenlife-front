@@ -43,6 +43,10 @@ p, ProjectCoordinator, jobs, (list)|(create)
 p, ProjectCoordinator, jobs/*, (edit)|(show)|(delete)
 p, ProjectCoordinator, jobs/*, field
 
+p, salescoordinator, jobs, (list)|(create)
+p, salescoordinator, jobs/*, (edit)|(show)|(delete)
+p, salescoordinator, jobs/*, field
+
 
 
 p, guest, authUser, login

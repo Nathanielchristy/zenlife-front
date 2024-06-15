@@ -8,6 +8,7 @@ import {
   Grid,
   Steps,
   Popover,
+  List,
 } from "antd";
 import {
   ClockCircleOutlined,
@@ -23,6 +24,7 @@ import {
 import { useShow } from "@refinedev/core";
 import { useMemo } from "react";
 import dayjs from "dayjs";
+import { Show } from "@refinedev/antd";
 
 const { Title } = Typography;
 // const { Step } = Steps;
@@ -96,7 +98,7 @@ export const JobShow = () => {
 
   const statusValues = useMemo(
     () => [
-      "Assigned",
+      "Job Created",
       "File preperation",
       "File sent for printing",
       "Printing",
@@ -115,38 +117,40 @@ export const JobShow = () => {
 
   const items = statusValues.map((status, index) => ({
     title: status,
-    description: record?.jobstatus === status ? `Job ${record?.jobstatus}` : "",
+    // description: record?.jobstatus === status ? `Job ${record?.jobstatus}` : "",
   }));
   return (
-    <Card loading={isLoading} style={{ margin: "24px" }}>
-      <Title level={4}>Job Details</Title>
-      <Row gutter={24}>
-        <Col span={16}>
-          <Descriptions bordered column={1}>
-            {details.map((item, index) => (
-              <Descriptions.Item
-                key={index}
-                label={
-                  <Space>
-                    {item.icon}
-                    {item.title}
-                  </Space>
-                }
-              >
-                {item.description}
-              </Descriptions.Item>
-            ))}
-          </Descriptions>
-        </Col>
-        <Col span={8} style={{ padding: "30px" }}>
-          <Steps
-            current={currentStatusIndex}
-            progressDot
-            direction="vertical"
-            items={items}
-          ></Steps>
-        </Col>
-      </Row>
-    </Card>
+    <Show>
+      <Card loading={isLoading} style={{ margin: "24px" }}>
+        <Title level={4}>Job Details</Title>
+        <Row gutter={24}>
+          <Col span={16}>
+            <Descriptions bordered column={1}>
+              {details.map((item, index) => (
+                <Descriptions.Item
+                  key={index}
+                  label={
+                    <Space>
+                      {item.icon}
+                      {item.title}
+                    </Space>
+                  }
+                >
+                  <Col>{item.description}</Col>
+                </Descriptions.Item>
+              ))}
+            </Descriptions>
+          </Col>
+          <Col span={8} style={{ padding: "30px" }}>
+            <Steps
+              current={currentStatusIndex}
+              progressDot
+              direction="vertical"
+              items={items}
+            ></Steps>
+          </Col>
+        </Row>
+      </Card>
+    </Show>
   );
 };

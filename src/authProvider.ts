@@ -7,8 +7,8 @@ import { io, Socket } from "socket.io-client";
 export const TOKEN_KEY = "refine-auth";
 export const SOCKET_KEY = "refine-socket";
 
-const backendMainURL = "http://localhost:5000"; // Replace this with your actual backend URL
-const backendUrl = "http://localhost:5000/api"; // Replace this with your actual backend URL
+const backendMainURL = "http://3.29.236.11:5000"; // Replace this with your actual backend URL
+const backendUrl = "http://3.29.236.11:5000/api"; // Replace this with your actual backend URL
 
 // Create an Axios instance with default configurations
 export const axiosInstance: AxiosInstance = axios.create({
@@ -20,9 +20,11 @@ export const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem(TOKEN_KEY);
+    console.log(token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    console.log("Request Config:", config);
     return config;
   },
   (error) => {
@@ -128,7 +130,7 @@ export const authProvider: AuthBindings = {
   check: async () => {
     try {
       const response = await axiosInstance.get("/authUser/loggedin");
-      const isLoggedIn = response.data;
+      const isLoggedIn = response.data.isLoggedIn;
       if (isLoggedIn) {
         return {
           authenticated: true,

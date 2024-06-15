@@ -4,19 +4,22 @@ import MDEditor from "@uiw/react-md-editor";
 import { Form, Input, InputNumber, Select } from "antd";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-
+import useRoleStore from "../../store";
+const { TextArea } = Input;
 export const JobEdit = () => {
   interface IStatus {
     _id: string;
     status: string;
   }
   const { formProps, saveButtonProps, formLoading } = useForm({});
+  const { role, setRole } = useRoleStore();
 
   const { queryResult } = useSelect<IStatus>({
     resource: "jobstatus",
   });
 
   const status = queryResult?.data?.data || [];
+  console.log(status);
 
   return (
     <Edit saveButtonProps={saveButtonProps} isLoading={formLoading}>
@@ -65,7 +68,7 @@ export const JobEdit = () => {
           name={["salescoordinator"]}
           rules={[
             {
-              required: false,
+              required: true,
               message: "Please input the sales coordinator!",
             },
           ]}
@@ -78,7 +81,7 @@ export const JobEdit = () => {
           name={["designer"]}
           rules={[
             {
-              required: false,
+              required: true,
               message: "Please input the designer!",
             },
           ]}
@@ -152,7 +155,7 @@ export const JobEdit = () => {
         </Form.Item>
 
         <Form.Item
-          label={"Description"}
+          label={"Important updates & information"}
           name={["description"]}
           rules={[
             {
@@ -161,7 +164,7 @@ export const JobEdit = () => {
             },
           ]}
         >
-          <Input.TextArea />
+          <TextArea rows={4} />
         </Form.Item>
 
         <Form.Item

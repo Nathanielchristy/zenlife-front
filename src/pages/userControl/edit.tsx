@@ -34,7 +34,7 @@ export const UserEdit = () => {
         >
           <Input />
         </Form.Item>
-        {/* <Form.Item label={"Password"} name={["password"]}>
+        <Form.Item label={"Password"} name={["password"]}>
           <Input.Password
             name="password"
             placeholder="input password"
@@ -43,7 +43,7 @@ export const UserEdit = () => {
               onVisibleChange: setPasswordVisible,
             }}
           />
-        </Form.Item> */}
+        </Form.Item>
         <FormItem label={"Role"} name={"role"}>
           <Select
             defaultValue="Employee"

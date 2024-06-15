@@ -48,6 +48,6 @@ const liveProvider = (client: Socket): LiveProvider => {
 };
 
 // Initialize Socket.IO client
-const socketClient = io("http://localhost:5000");
+const socketClient = io("http://3.29.236.11:5000");
 
 export { liveProvider, socketClient };
