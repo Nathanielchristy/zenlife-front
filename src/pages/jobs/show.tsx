@@ -130,7 +130,9 @@ export const JobShow = () => {
                   }
                   style={{ flexDirection: breakpoints.xs ? "column" : "row" }}
                 >
-                  <Col>{item.description}</Col>
+                  <Col style={{ marginBottom: breakpoints.xs ? "12px" : "0" }}>
+                    {item.description}
+                  </Col>
                 </Descriptions.Item>
               ))}
             </Descriptions>
