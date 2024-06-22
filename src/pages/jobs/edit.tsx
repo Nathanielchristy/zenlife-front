@@ -178,7 +178,7 @@ export const JobEdit = () => {
             },
           ]}
         >
-          <Select defaultValue="Unassigned" style={{ width: "20%" }}>
+          <Select defaultValue="Unassigned" style={{ width: "50%" }}>
             {status.map((s) => (
               <Select.Option key={s._id} value={s.status}>
                 {s.status}

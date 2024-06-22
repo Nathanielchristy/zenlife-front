@@ -60,7 +60,7 @@ p, Production, jobs/*, (edit)|(show)
 p, Production, jobs/*, field
 
 p, Printer, jobs, (list)
-p, Printer, jobs/*, (edit)
+p, Printer, jobs/*, (edit)|(show)
 p, Printer, jobs/*, field
 
 
