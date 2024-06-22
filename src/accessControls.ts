@@ -55,12 +55,12 @@ p, ProjectManager-Sales, jobs, (list)|(create)
 p, ProjectManager-Sales, jobs/*, (edit)|(show)|(delete)
 p, ProjectManager-Sales, jobs/*, field
 
-p, Production, jobs, (list)|(create)
-p, Production, jobs/*, (edit)|(show)|(delete)
+p, Production, jobs, (list)
+p, Production, jobs/*, (edit)|(show)
 p, Production, jobs/*, field
 
-p, Printer, jobs, (list)|(create)
-p, Printer, jobs/*, (edit)|(show)|(delete)
+p, Printer, jobs, (list)
+p, Printer, jobs/*, (edit)
 p, Printer, jobs/*, field
 
 
