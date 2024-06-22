@@ -6,7 +6,11 @@ export const Register = () => {
     <AuthPage
       type="register"
       title={
-        <ThemedTitleV2 collapsed={false} text="Zen Life" icon={<AppIcon />} />
+        <ThemedTitleV2
+          collapsed={false}
+          text="Zenith Advertising"
+          icon={<AppIcon />}
+        />
       }
     />
   );
