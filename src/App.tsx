@@ -160,7 +160,7 @@ function App() {
                         Title={({ collapsed }) => (
                           <ThemedTitleV2
                             collapsed={collapsed}
-                            text="Zen Life"
+                            text="Zenith Advertising"
                             icon={<AppIcon />}
                           />
                         )}
