@@ -47,6 +47,10 @@ p, salescoordinator, jobs, (list)|(create)
 p, salescoordinator, jobs/*, (edit)|(show)|(delete)
 p, salescoordinator, jobs/*, field
 
+p, Designer, jobs, (list)|(create)
+p, Designer, jobs/*, (edit)|(show)|(delete)
+p, Designer, jobs/*, field
+
 
 
 p, guest, authUser, login
