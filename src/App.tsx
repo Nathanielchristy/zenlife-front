@@ -55,7 +55,7 @@ import { DashList } from "./pages/dashboard";
 import { liveProvider } from "@refinedev/ably";
 import { ablyClient } from "./utility/ablyClient";
 
-const API_URL = "http://3.29.236.11:5000/api";
+const API_URL = "http://3.28.123.101:5000/api";
 
 function App() {
   const initialRole = sessionStorage.getItem("userRole") || "guest";
