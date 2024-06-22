@@ -51,6 +51,18 @@ p, Designer, jobs, (list)|(create)
 p, Designer, jobs/*, (edit)|(show)|(delete)
 p, Designer, jobs/*, field
 
+p, ProjectManager-Sales, jobs, (list)|(create)
+p, ProjectManager-Sales, jobs/*, (edit)|(show)|(delete)
+p, ProjectManager-Sales, jobs/*, field
+
+p, Production, jobs, (list)|(create)
+p, Production, jobs/*, (edit)|(show)|(delete)
+p, Production, jobs/*, field
+
+p, Printer, jobs, (list)|(create)
+p, Printer, jobs/*, (edit)|(show)|(delete)
+p, Printer, jobs/*, field
+
 
 
 p, guest, authUser, login
