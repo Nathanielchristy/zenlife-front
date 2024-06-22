@@ -13,6 +13,10 @@ jobs:
         uses: actions/checkout@v4
       - name: Login to Docker Hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+      - name: Clean up Docker environment before build
+        run: |
+          docker system prune -af
+          docker volume prune -f
       - name: Build Docker image
         run: docker build -t natztheking/zenlife-reactjs-app .
       - name: Publish image to Docker Hub
@@ -22,8 +26,14 @@ jobs:
     needs: build
     runs-on: self-hosted
     steps:
+      - name: Clean up Docker environment before deploy
+        run: |
+          docker system prune -af
+          docker volume prune -f
       - name: Pull image from Docker Hub
         run: docker pull natztheking/zenlife-reactjs-app:latest
+      - name: Stop old container
+        run: docker stop reactjs-app-container || true
       - name: Delete old container
         run: docker rm -f reactjs-app-container || true
       - name: Run Docker Container
