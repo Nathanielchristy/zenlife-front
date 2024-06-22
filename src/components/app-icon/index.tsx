@@ -9,6 +9,8 @@ export const AppIcon: React.FC = (props) => {
       xmlnsXlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 1369.29 514.42"
       {...props}
+      width={"100px"}
+      height={"100px"}
     >
       <defs>
         <style>
