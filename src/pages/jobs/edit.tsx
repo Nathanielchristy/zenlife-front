@@ -26,60 +26,60 @@ export const JobEdit = () => {
   console.log(salesCoordinator);
 
   const status = queryResult?.data?.data || [];
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosInstance.get("/users");
-        const rolesAndNamesArray = response.data.map(
-          (employee: { role: any; name: any }) => {
-            const { role, name } = employee;
-            return [role, name];
-          }
-        );
-        // Clear previous state
-        setProjectManagers([]);
-        setDesigners([]);
-        setProjectCoordinators([]);
-        setPrinters([]);
-        setProduction([]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axiosInstance.get("/users");
+  //       const rolesAndNamesArray = response.data.map(
+  //         (employee: { role: any; name: any }) => {
+  //           const { role, name } = employee;
+  //           return [role, name];
+  //         }
+  //       );
+  //       // Clear previous state
+  //       setProjectManagers([]);
+  //       setDesigners([]);
+  //       setProjectCoordinators([]);
+  //       setPrinters([]);
+  //       setProduction([]);
 
-        rolesAndNamesArray.forEach((item: [any, any]) => {
-          const [role, name] = item;
-          switch (role) {
-            case "ProjectManager-Sales":
-              setProjectManagers((prev) => [...prev, name]);
-              break;
-            case "Designer":
-              setDesigners((prev) => [...prev, name]);
-              break;
-            case "ProjectCoordinator":
-              setProjectCoordinators((prev) => [...prev, name]);
-              break;
-            case "Printer":
-              setPrinters((prev) => [...prev, name]);
-              break;
-            case "Production":
-              setProduction((prev) => [...prev, name]);
-              break;
-            // Add more cases if there are other roles
-            default:
-              break;
-          }
-          const combinedArray = [
-            ...projectManagers,
-            ...designers,
-            ...projectCoordinators,
-          ];
-          console.log(combinedArray);
-          setSalesCoordinator(combinedArray);
-        });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        throw error; // Re-throw error to be handled by the caller if needed
-      }
-    };
-    fetchData();
-  }, []);
+  //       rolesAndNamesArray.forEach((item: [any, any]) => {
+  //         const [role, name] = item;
+  //         switch (role) {
+  //           case "ProjectManager-Sales":
+  //             setProjectManagers((prev) => [...prev, name]);
+  //             break;
+  //           case "Designer":
+  //             setDesigners((prev) => [...prev, name]);
+  //             break;
+  //           case "ProjectCoordinator":
+  //             setProjectCoordinators((prev) => [...prev, name]);
+  //             break;
+  //           case "Printer":
+  //             setPrinters((prev) => [...prev, name]);
+  //             break;
+  //           case "Production":
+  //             setProduction((prev) => [...prev, name]);
+  //             break;
+  //           // Add more cases if there are other roles
+  //           default:
+  //             break;
+  //         }
+  //         const combinedArray = [
+  //           ...projectManagers,
+  //           ...designers,
+  //           ...projectCoordinators,
+  //         ];
+  //         console.log(combinedArray);
+  //         setSalesCoordinator(combinedArray);
+  //       });
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //       throw error; // Re-throw error to be handled by the caller if needed
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
   return (
     <Edit saveButtonProps={saveButtonProps} isLoading={formLoading}>
       <Form {...formProps} layout="vertical">
