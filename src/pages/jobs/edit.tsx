@@ -17,6 +17,13 @@ export const JobEdit = () => {
   const { queryResult } = useSelect<IStatus>({
     resource: "jobstatus",
   });
+  const [projectManagers, setProjectManagers] = useState<any[]>([]);
+  const [designers, setDesigners] = useState<any[]>([]);
+  const [projectCoordinators, setProjectCoordinators] = useState<any[]>([]);
+  const [printers, setPrinters] = useState<any[]>([]);
+  const [production, setProduction] = useState<any[]>([]);
+  const [salesCoordinator, setSalesCoordinator] = useState<any[]>([]);
+  console.log(salesCoordinator);
 
   const status = queryResult?.data?.data || [];
   useEffect(() => {
@@ -29,38 +36,44 @@ export const JobEdit = () => {
             return [role, name];
           }
         );
-        const projectManagers: any[] = [];
-        const designers: any[] = [];
-        const projectCoordinators: any[] = [];
-        const printers: any[] = [];
-        const production: any[] = [];
+        // Clear previous state
+        setProjectManagers([]);
+        setDesigners([]);
+        setProjectCoordinators([]);
+        setPrinters([]);
+        setProduction([]);
+
         rolesAndNamesArray.forEach((item: [any, any]) => {
           const [role, name] = item;
           switch (role) {
             case "ProjectManager-Sales":
-              projectManagers.push(name);
+              setProjectManagers((prev) => [...prev, name]);
               break;
             case "Designer":
-              designers.push(name);
+              setDesigners((prev) => [...prev, name]);
               break;
             case "ProjectCoordinator":
-              projectCoordinators.push(name);
+              setProjectCoordinators((prev) => [...prev, name]);
               break;
             case "Printer":
-              printers.push(name);
+              setPrinters((prev) => [...prev, name]);
               break;
             case "Production":
-              production.push(name);
+              setProduction((prev) => [...prev, name]);
               break;
             // Add more cases if there are other roles
             default:
               break;
           }
+          const combinedArray = [
+            ...projectManagers,
+            ...designers,
+            ...projectCoordinators,
+          ];
+          console.log(combinedArray);
+          setSalesCoordinator(combinedArray);
         });
-        console.log(projectCoordinators);
-        return response.data;
       } catch (error) {
-        // Handle error appropriately
         console.error("Error fetching data:", error);
         throw error; // Re-throw error to be handled by the caller if needed
       }
@@ -131,6 +144,13 @@ export const JobEdit = () => {
             },
           ]}
         >
+          {/* <Select defaultValue="" style={{ width: "50%" }}>
+            {salesCoordinator.map((salesCoordinator, index) => (
+              <Select.Option key={index} value={salesCoordinator}>
+                {salesCoordinator}
+              </Select.Option>
+            ))}
+          </Select> */}
           <Input />
         </Form.Item>
 
@@ -144,6 +164,14 @@ export const JobEdit = () => {
             },
           ]}
         >
+          {/* <Select defaultValue="" style={{ width: "50%" }}>
+            {designers.map((designer, index) => (
+              <Select.Option key={index} value={designer}>
+                {designer}
+              </Select.Option>
+            ))}
+              
+          </Select> */}
           <Input />
         </Form.Item>
 

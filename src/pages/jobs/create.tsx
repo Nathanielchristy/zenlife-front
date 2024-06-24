@@ -18,6 +18,7 @@ export const JobCreate = () => {
   const [projectCoordinators, setProjectCoordinators] = useState<any[]>([]);
   const [printers, setPrinters] = useState<any[]>([]);
   const [production, setProduction] = useState<any[]>([]);
+  const [salesCoordinator, setSalesCoordinator] = useState<any[]>([]);
   const status = queryResult?.data?.data || [];
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +36,7 @@ export const JobCreate = () => {
         setProjectCoordinators([]);
         setPrinters([]);
         setProduction([]);
+        setSalesCoordinator([]);
 
         rolesAndNamesArray.forEach((item: [any, any]) => {
           const [role, name] = item;
@@ -58,6 +60,13 @@ export const JobCreate = () => {
             default:
               break;
           }
+          const combinedArray = [
+            ...projectManagers,
+            ...designers,
+            ...projectCoordinators,
+          ];
+          console.log(combinedArray);
+          setSalesCoordinator(combinedArray);
         });
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -119,6 +128,13 @@ export const JobCreate = () => {
             },
           ]}
         >
+          {/* <Select defaultValue="" style={{ width: "50%" }}>
+            {salesCoordinator.map((salesCoordinator, index) => (
+              <Select.Option key={index} value={salesCoordinator}>
+                {salesCoordinator}
+              </Select.Option>
+            ))}
+          </Select> */}
           <Input />
         </Form.Item>
 
@@ -132,13 +148,14 @@ export const JobCreate = () => {
             },
           ]}
         >
-          <Select defaultValue="" style={{ width: "50%" }}>
+          {/* <Select defaultValue="" style={{ width: "50%" }}>
             {designers.map((designer, index) => (
               <Select.Option key={index} value={designer}>
                 {designer}
               </Select.Option>
             ))}
-          </Select>
+          </Select> */}
+          <Input />
         </Form.Item>
 
         <Form.Item
