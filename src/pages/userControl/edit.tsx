@@ -1,10 +1,12 @@
 import { Edit, useForm, useSelect } from "@refinedev/antd";
+import { useDocumentTitle } from "@refinedev/react-router-v6";
 import MDEditor from "@uiw/react-md-editor";
 import { Button, Form, Input, InputNumber, Select, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { useState } from "react";
 
 export const UserEdit = () => {
+  useDocumentTitle("Users | Zenith");
   const { formProps, saveButtonProps, queryResult, formLoading } = useForm({});
   const [passwordVisible, setPasswordVisible] = useState(false);
   return (

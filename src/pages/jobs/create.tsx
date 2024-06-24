@@ -1,5 +1,7 @@
 import { Create, useForm, useSelect } from "@refinedev/antd";
 import { Form, Input, InputNumber, Select } from "antd";
+import { axiosInstance } from "../../authProvider";
+import { useEffect, useState } from "react";
 
 interface IStatus {
   _id: string;
@@ -11,9 +13,60 @@ export const JobCreate = () => {
   const { queryResult } = useSelect<IStatus>({
     resource: "jobstatus",
   });
-
+  const [projectManagers, setProjectManagers] = useState<any[]>([]);
+  const [designers, setDesigners] = useState<any[]>([]);
+  const [projectCoordinators, setProjectCoordinators] = useState<any[]>([]);
+  const [printers, setPrinters] = useState<any[]>([]);
+  const [production, setProduction] = useState<any[]>([]);
   const status = queryResult?.data?.data || [];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get("/users");
+        const rolesAndNamesArray = response.data.map(
+          (employee: { role: any; name: any }) => {
+            const { role, name } = employee;
+            return [role, name];
+          }
+        );
+        // Clear previous state
+        setProjectManagers([]);
+        setDesigners([]);
+        setProjectCoordinators([]);
+        setPrinters([]);
+        setProduction([]);
 
+        rolesAndNamesArray.forEach((item: [any, any]) => {
+          const [role, name] = item;
+          switch (role) {
+            case "ProjectManager-Sales":
+              setProjectManagers((prev) => [...prev, name]);
+              break;
+            case "Designer":
+              setDesigners((prev) => [...prev, name]);
+              break;
+            case "ProjectCoordinator":
+              setProjectCoordinators((prev) => [...prev, name]);
+              break;
+            case "Printer":
+              setPrinters((prev) => [...prev, name]);
+              break;
+            case "Production":
+              setProduction((prev) => [...prev, name]);
+              break;
+            // Add more cases if there are other roles
+            default:
+              break;
+          }
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        throw error; // Re-throw error to be handled by the caller if needed
+      }
+    };
+    fetchData();
+  }, []);
+  console.log(designers);
   return (
     <Create saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="horizontal">
@@ -44,7 +97,7 @@ export const JobCreate = () => {
         </Form.Item>
 
         <Form.Item
-          label={"Invoice Number"}
+          label={"Estimate Number"}
           name={["invoiceno"]}
           rules={[
             {
@@ -79,7 +132,13 @@ export const JobCreate = () => {
             },
           ]}
         >
-          <Input />
+          <Select defaultValue="" style={{ width: "50%" }}>
+            {designers.map((designer, index) => (
+              <Select.Option key={index} value={designer}>
+                {designer}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
 
         <Form.Item

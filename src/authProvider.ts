@@ -20,11 +20,9 @@ export const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem(TOKEN_KEY);
-    console.log(token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    console.log("Request Config:", config);
     return config;
   },
   (error) => {
@@ -177,5 +175,20 @@ export const authProvider: AuthBindings = {
   onError: async (error) => {
     console.error(error); // Log the error for debugging
     return { error };
+  },
+  forgotPassword: async ({ email }) => {
+    try {
+      return {
+        success: true,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: {
+          name: "User Error",
+          message: "Invalid email",
+        },
+      };
+    }
   },
 };

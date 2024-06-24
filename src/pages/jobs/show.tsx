@@ -18,10 +18,12 @@ import {
 import { useShow } from "@refinedev/core";
 import { useMemo } from "react";
 import { Show } from "@refinedev/antd";
+import { useDocumentTitle } from "@refinedev/react-router-v6";
 
 const { Title } = Typography;
 
 export const JobShow = () => {
+  useDocumentTitle("Jobs | Zenith");
   const { queryResult } = useShow({});
   const { data, isLoading } = queryResult;
   const record = data?.data;
@@ -41,7 +43,7 @@ export const JobShow = () => {
       },
       {
         icon: <BarcodeOutlined />,
-        title: "Invoice Number",
+        title: "Estimate Number",
         description: record?.invoiceno,
       },
       {
@@ -114,28 +116,44 @@ export const JobShow = () => {
 
   return (
     <Show>
-      <Card loading={isLoading} style={{ margin: "24px" }}>
+      <Card loading={isLoading}>
         <Title level={4}>Job Details</Title>
         <Row gutter={24}>
           <Col xs={24} lg={16}>
-            <Descriptions bordered={breakpoints.lg} column={1}>
-              {details.map((item, index) => (
-                <Descriptions.Item
-                  key={index}
-                  label={
-                    <Space>
-                      {item.icon}
-                      {item.title}
-                    </Space>
-                  }
-                  style={{ flexDirection: breakpoints.xs ? "column" : "row" }}
-                >
-                  <Col style={{ marginBottom: breakpoints.xs ? "12px" : "0" }}>
+            {/* Conditional rendering based on xs breakpoint */}
+            {breakpoints.xs ? (
+              <Descriptions bordered={breakpoints.lg} layout="vertical">
+                {details.map((item, index) => (
+                  <Descriptions.Item
+                    key={index}
+                    label={
+                      <Space>
+                        {item.icon}
+                        {item.title}
+                      </Space>
+                    }
+                  >
                     {item.description}
-                  </Col>
-                </Descriptions.Item>
-              ))}
-            </Descriptions>
+                  </Descriptions.Item>
+                ))}
+              </Descriptions>
+            ) : (
+              <Descriptions bordered={breakpoints.lg} column={1}>
+                {details.map((item, index) => (
+                  <Descriptions.Item
+                    key={index}
+                    label={
+                      <Space>
+                        {item.icon}
+                        {item.title}
+                      </Space>
+                    }
+                  >
+                    {item.description}
+                  </Descriptions.Item>
+                ))}
+              </Descriptions>
+            )}
           </Col>
           <Col xs={24} lg={8} style={{ padding: "30px" }}>
             <Steps

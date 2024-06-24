@@ -1,12 +1,12 @@
 import { Edit, useForm, useSelect } from "@refinedev/antd";
-import { useUpdate } from "@refinedev/core";
-import MDEditor from "@uiw/react-md-editor";
 import { Form, Input, InputNumber, Select } from "antd";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import useRoleStore from "../../store";
 const { TextArea } = Input;
+import { axiosInstance } from "../../authProvider";
+import React, { useState, useEffect } from "react";
+import { useDocumentTitle } from "@refinedev/react-router-v6";
 export const JobEdit = () => {
+  useDocumentTitle("Jobs | Zenith");
   interface IStatus {
     _id: string;
     status: string;
@@ -19,11 +19,69 @@ export const JobEdit = () => {
   });
 
   const status = queryResult?.data?.data || [];
-  console.log(status);
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get("/users");
+        const rolesAndNamesArray = response.data.map(
+          (employee: { role: any; name: any }) => {
+            const { role, name } = employee;
+            return [role, name];
+          }
+        );
+        const projectManagers: any[] = [];
+        const designers: any[] = [];
+        const projectCoordinators: any[] = [];
+        const printers: any[] = [];
+        const production: any[] = [];
+        rolesAndNamesArray.forEach((item: [any, any]) => {
+          const [role, name] = item;
+          switch (role) {
+            case "ProjectManager-Sales":
+              projectManagers.push(name);
+              break;
+            case "Designer":
+              designers.push(name);
+              break;
+            case "ProjectCoordinator":
+              projectCoordinators.push(name);
+              break;
+            case "Printer":
+              printers.push(name);
+              break;
+            case "Production":
+              production.push(name);
+              break;
+            // Add more cases if there are other roles
+            default:
+              break;
+          }
+        });
+        console.log(projectCoordinators);
+        return response.data;
+      } catch (error) {
+        // Handle error appropriately
+        console.error("Error fetching data:", error);
+        throw error; // Re-throw error to be handled by the caller if needed
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <Edit saveButtonProps={saveButtonProps} isLoading={formLoading}>
       <Form {...formProps} layout="vertical">
+        <Form.Item
+          label={"Job Card Number"}
+          name={["jobcardnumber"]}
+          rules={[
+            {
+              required: true,
+              message: "Please input the Job Card Number!",
+            },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
         <Form.Item
           label={"Client Name"}
           name={["clientname"]}
@@ -51,7 +109,7 @@ export const JobEdit = () => {
         </Form.Item>
 
         <Form.Item
-          label={"Invoice Number"}
+          label={"Estimate Number"}
           name={["invoiceno"]}
           rules={[
             {
