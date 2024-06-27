@@ -89,7 +89,7 @@ export const JobList = () => {
                 ))}
               </Select>
             ) : (
-              <Table.Column dataIndex="jobstatus" title="Job Status" />
+              text
             )
           }
         />
