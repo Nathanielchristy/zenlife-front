@@ -13,72 +13,93 @@ export const JobCreate = () => {
   const { queryResult } = useSelect<IStatus>({
     resource: "jobstatus",
   });
-  const [projectManagers, setProjectManagers] = useState<any[]>([]);
-  const [designers, setDesigners] = useState<any[]>([]);
-  const [projectCoordinators, setProjectCoordinators] = useState<any[]>([]);
-  const [printers, setPrinters] = useState<any[]>([]);
-  const [production, setProduction] = useState<any[]>([]);
-  const [salesCoordinator, setSalesCoordinator] = useState<any[]>([]);
-  const status = queryResult?.data?.data || [];
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axiosInstance.get("/users");
-        const rolesAndNamesArray = response.data.map(
-          (employee: { role: any; name: any }) => {
-            const { role, name } = employee;
-            return [role, name];
-          }
-        );
-        // Clear previous state
-        setProjectManagers([]);
-        setDesigners([]);
-        setProjectCoordinators([]);
-        setPrinters([]);
-        setProduction([]);
-        setSalesCoordinator([]);
+  const userRole = sessionStorage.getItem("userRole");
+  const username = localStorage.getItem("Username");
+  let status = queryResult?.data?.data || [];
+  if (userRole === "Production") {
+    status = [
+      { _id: "1", status: "Ready for Delivery" },
+      { _id: "2", status: "Ready for Site" },
+    ];
+  } else if (userRole === "Designer") {
+    status = [
+      { _id: "1", status: "Job Created" },
+      { _id: "2", status: "File preperation" },
+      { _id: "3", status: "File sent for printing" },
+    ];
+  }
+  // const [projectManagers, setProjectManagers] = useState<any[]>([]);
+  // const [designers, setDesigners] = useState<any[]>([]);
+  // const [projectCoordinators, setProjectCoordinators] = useState<any[]>([]);
+  // const [printers, setPrinters] = useState<any[]>([]);
+  // const [production, setProduction] = useState<any[]>([]);
+  // const [salesCoordinator, setSalesCoordinator] = useState<any[]>([]);
 
-        rolesAndNamesArray.forEach((item: [any, any]) => {
-          const [role, name] = item;
-          switch (role) {
-            case "ProjectManager-Sales":
-              setProjectManagers((prev) => [...prev, name]);
-              break;
-            case "Designer":
-              setDesigners((prev) => [...prev, name]);
-              break;
-            case "ProjectCoordinator":
-              setProjectCoordinators((prev) => [...prev, name]);
-              break;
-            case "Printer":
-              setPrinters((prev) => [...prev, name]);
-              break;
-            case "Production":
-              setProduction((prev) => [...prev, name]);
-              break;
-            // Add more cases if there are other roles
-            default:
-              break;
-          }
-          const combinedArray = [
-            ...projectManagers,
-            ...designers,
-            ...projectCoordinators,
-          ];
-          console.log(combinedArray);
-          setSalesCoordinator(combinedArray);
-        });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        throw error; // Re-throw error to be handled by the caller if needed
-      }
-    };
-    fetchData();
-  }, []);
-  console.log(designers);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axiosInstance.get("/users");
+  //       const rolesAndNamesArray = response.data.map(
+  //         (employee: { role: any; name: any }) => {
+  //           const { role, name } = employee;
+  //           return [role, name];
+  //         }
+  //       );
+  //       // Clear previous state
+  //       setProjectManagers([]);
+  //       setDesigners([]);
+  //       setProjectCoordinators([]);
+  //       setPrinters([]);
+  //       setProduction([]);
+  //       setSalesCoordinator([]);
+
+  //       rolesAndNamesArray.forEach((item: [any, any]) => {
+  //         const [role, name] = item;
+  //         switch (role) {
+  //           case "ProjectManager-Sales":
+  //             setProjectManagers((prev) => [...prev, name]);
+  //             break;
+  //           case "Designer":
+  //             setDesigners((prev) => [...prev, name]);
+  //             break;
+  //           case "ProjectCoordinator":
+  //             setProjectCoordinators((prev) => [...prev, name]);
+  //             break;
+  //           case "Printer":
+  //             setPrinters((prev) => [...prev, name]);
+  //             break;
+  //           case "Production":
+  //             setProduction((prev) => [...prev, name]);
+  //             break;
+  //           // Add more cases if there are other roles
+  //           default:
+  //             break;
+  //         }
+  //         const combinedArray = [
+  //           ...projectManagers,
+  //           ...designers,
+  //           ...projectCoordinators,
+  //         ];
+  //         console.log(combinedArray);
+  //         setSalesCoordinator(combinedArray);
+  //       });
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //       throw error; // Re-throw error to be handled by the caller if needed
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+  // console.log(designers);
   return (
     <Create saveButtonProps={saveButtonProps}>
-      <Form {...formProps} layout="horizontal">
+      <Form
+        {...formProps}
+        layout="horizontal"
+        initialValues={{
+          editedBy: username,
+        }}
+      >
         <Form.Item
           label={"Client Name"}
           name={["clientname"]}
@@ -254,6 +275,19 @@ export const JobCreate = () => {
               </Select.Option>
             ))}
           </Select>
+        </Form.Item>
+        <Form.Item
+          label={"Updated By"}
+          name={["editedBy"]}
+          rules={[
+            {
+              required: false,
+              message: "Please input the description!",
+            },
+          ]}
+          style={{ display: "none" }}
+        >
+          <Input value={`${username}`} />
         </Form.Item>
       </Form>
     </Create>

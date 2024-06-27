@@ -4,12 +4,18 @@ import {
   EditButton,
   List,
   ShowButton,
+  useSelect,
   useTable,
 } from "@refinedev/antd";
 
-import { Space, Table } from "antd";
+import { Select, Space, Table, message } from "antd";
 import { IUser } from "../../interfaces";
-import { BaseRecord, useGetIdentity, useNavigation } from "@refinedev/core";
+import {
+  BaseRecord,
+  useGetIdentity,
+  useNavigation,
+  useUpdate,
+} from "@refinedev/core";
 
 export const JobList = () => {
   const { show } = useNavigation();
@@ -20,6 +26,36 @@ export const JobList = () => {
     //   pageSize: 10,
     // },
   });
+  interface IStatus {
+    _id: string;
+    status: string;
+  }
+  const { queryResult } = useSelect<IStatus>({
+    resource: "jobstatus",
+  });
+  const status = queryResult?.data?.data || [];
+  const { mutate: updateJobStatus } = useUpdate();
+  const userRole = sessionStorage.getItem("userRole");
+  const username = localStorage.getItem("Username");
+
+  const handleStatusChange = (record: BaseRecord, newStatus: string) => {
+    updateJobStatus(
+      {
+        resource: "jobs", // The resource name, make sure it matches your resource
+        id: record._id,
+        values: { jobstatus: newStatus, editedBy: username },
+      },
+      {
+        onSuccess: () => {
+          message.success("Job status updated successfully");
+          // Optionally, you can refetch or update local table data here
+        },
+        onError: () => {
+          message.error("Failed to update job status");
+        },
+      }
+    );
+  };
   return (
     <List>
       <Table
@@ -36,7 +72,28 @@ export const JobList = () => {
         <Table.Column dataIndex="clientname" title="Client Name" />
         <Table.Column dataIndex="jobname" title="Job Name" />
 
-        <Table.Column dataIndex="jobstatus" title="Job Status" />
+        <Table.Column
+          dataIndex="jobstatus"
+          title="Job Status"
+          render={(text: string, record: BaseRecord) =>
+            userRole === "admin" || userRole === "manager" ? (
+              <Select
+                defaultValue={text}
+                onChange={(value) => handleStatusChange(record, value)}
+                style={{ width: "80%" }}
+              >
+                {status.map((s) => (
+                  <Select.Option key={s._id} value={s.status}>
+                    {s.status}
+                  </Select.Option>
+                ))}
+              </Select>
+            ) : (
+              <Table.Column dataIndex="jobstatus" title="Job Status" />
+            )
+          }
+        />
+        <Table.Column dataIndex="editedBy" title="Updated By" />
         <Table.Column
           dataIndex="createdAt"
           title="Created At"

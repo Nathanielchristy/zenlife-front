@@ -1,31 +1,43 @@
 import { Edit, useForm, useSelect } from "@refinedev/antd";
 import { Form, Input, InputNumber, Select } from "antd";
-import useRoleStore from "../../store";
 const { TextArea } = Input;
 import { axiosInstance } from "../../authProvider";
 import React, { useState, useEffect } from "react";
 import { useDocumentTitle } from "@refinedev/react-router-v6";
 export const JobEdit = () => {
   useDocumentTitle("Jobs | Zenith");
+  const userRole = sessionStorage.getItem("userRole");
   interface IStatus {
     _id: string;
     status: string;
   }
   const { formProps, saveButtonProps, formLoading } = useForm({});
-  const { role, setRole } = useRoleStore();
 
   const { queryResult } = useSelect<IStatus>({
     resource: "jobstatus",
   });
-  const [projectManagers, setProjectManagers] = useState<any[]>([]);
-  const [designers, setDesigners] = useState<any[]>([]);
-  const [projectCoordinators, setProjectCoordinators] = useState<any[]>([]);
-  const [printers, setPrinters] = useState<any[]>([]);
-  const [production, setProduction] = useState<any[]>([]);
-  const [salesCoordinator, setSalesCoordinator] = useState<any[]>([]);
-  console.log(salesCoordinator);
+  // const [projectManagers, setProjectManagers] = useState<any[]>([]);
+  // const [designers, setDesigners] = useState<any[]>([]);
+  // const [projectCoordinators, setProjectCoordinators] = useState<any[]>([]);
+  // const [printers, setPrinters] = useState<any[]>([]);
+  // const [production, setProduction] = useState<any[]>([]);
+  // const [salesCoordinator, setSalesCoordinator] = useState<any[]>([]);
+  const username = localStorage.getItem("Username");
+  let status = queryResult?.data?.data || [];
+  if (userRole === "Production") {
+    status = [
+      { _id: "1", status: "Ready for Delivery" },
+      { _id: "2", status: "Ready for Site" },
+      { _id: "3", status: "Completed" },
+    ];
+  } else if (userRole === "Printing") {
+    status = [
+      { _id: "1", status: "Ready for Delivert" },
+      { _id: "2", status: "Ready for Production" },
+      { _id: "3", status: "Completed" },
+    ];
+  }
 
-  const status = queryResult?.data?.data || [];
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -82,7 +94,13 @@ export const JobEdit = () => {
   // }, []);
   return (
     <Edit saveButtonProps={saveButtonProps} isLoading={formLoading}>
-      <Form {...formProps} layout="vertical">
+      <Form
+        {...formProps}
+        layout="vertical"
+        initialValues={{
+          editedBy: username,
+        }}
+      >
         <Form.Item
           label={"Job Card Number"}
           name={["jobcardnumber"]}
@@ -271,6 +289,19 @@ export const JobEdit = () => {
               </Select.Option>
             ))}
           </Select>
+        </Form.Item>
+        <Form.Item
+          label={"Updated By"}
+          name={["editedBy"]}
+          rules={[
+            {
+              required: false,
+              message: "Please input the description!",
+            },
+          ]}
+          style={{ display: "none" }}
+        >
+          <Input value={`${username}`} />
         </Form.Item>
       </Form>
     </Edit>

@@ -54,8 +54,9 @@ import { adapter, model } from "./accessControls";
 import useRoleStore from "./store";
 import { DashList } from "./pages/dashboard";
 
-import { liveProvider } from "@refinedev/ably";
+// import { liveProvider } from "@refinedev/ably";
 import { ablyClient } from "./utility/ablyClient";
+import { liveProvider } from "./liveprovider";
 
 const API_URL = "http://3.29.90.15:5000/api";
 

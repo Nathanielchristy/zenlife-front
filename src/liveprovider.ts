@@ -1,14 +1,19 @@
-// liveProvider.ts
 import type { LiveProvider, LiveEvent } from "@refinedev/core";
-import { io, Socket } from "socket.io-client";
+import Ably from "ably/promises";
+import type { Types } from "ably";
 
-interface MessageType {
+interface MessageType extends Types.Message {
   data: LiveEvent;
 }
 
-const liveProvider = (client: Socket): LiveProvider => {
+const notificationSound = new Audio("alertsound.mp3");
+const editSound = new Audio("alertsound.mp3");
+
+const liveProvider = (client: Ably.Realtime): LiveProvider => {
   return {
     subscribe: ({ channel, types, params, callback }) => {
+      const channelInstance = client.channels.get(channel);
+
       const listener = (message: MessageType) => {
         if (types.includes("*") || types.includes(message.data.type)) {
           if (
@@ -24,30 +29,42 @@ const liveProvider = (client: Socket): LiveProvider => {
                 ).length > 0
             ) {
               callback(message.data as LiveEvent);
+              playSound(message.data.type); // Play sound based on event type
             }
           } else {
             callback(message.data);
+            playSound(message.data.type); // Play sound based on event type
           }
         }
       };
+      channelInstance.subscribe(listener);
 
-      client.on(channel, listener);
-
-      return { channel, listener };
+      return { channelInstance, listener };
     },
 
-    unsubscribe: (payload: { channel: string; listener: () => void }) => {
-      const { channel, listener } = payload;
-      client.off(channel, listener);
+    unsubscribe: (payload: {
+      channelInstance: Types.RealtimeChannelPromise;
+      listener: () => void;
+    }) => {
+      const { channelInstance, listener } = payload;
+      channelInstance.unsubscribe(listener);
     },
 
     publish: (event: LiveEvent) => {
-      client.emit(event.channel, event);
+      const channelInstance = client.channels.get(event.channel);
+
+      channelInstance.publish(event.type, event);
     },
   };
 };
 
-// Initialize Socket.IO client
-const socketClient = io("http://3.29.90.15:5000");
+const playSound = (eventType: string) => {
+  if (eventType === "created") {
+    notificationSound.play();
+  }
+  // else if (eventType === "updated") {
+  //   editSound.play();
+  // }
+};
 
-export { liveProvider, socketClient };
+export { liveProvider, Ably };
