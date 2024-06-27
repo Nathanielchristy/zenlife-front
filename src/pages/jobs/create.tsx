@@ -27,6 +27,18 @@ export const JobCreate = () => {
       { _id: "2", status: "File preperation" },
       { _id: "3", status: "File sent for printing" },
     ];
+  } else if (userRole === "ProjectManager-Sales") {
+    status = [
+      { _id: "1", status: "Job Created" },
+      { _id: "2", status: "File preperation" },
+      { _id: "3", status: "File sent for printing" },
+    ];
+  } else if (userRole === "ProjectCoordinator") {
+    status = [
+      { _id: "1", status: "Job Created" },
+      { _id: "2", status: "File preperation" },
+      { _id: "3", status: "File sent for printing" },
+    ];
   }
   // const [projectManagers, setProjectManagers] = useState<any[]>([]);
   // const [designers, setDesigners] = useState<any[]>([]);

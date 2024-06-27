@@ -94,13 +94,7 @@ export const JobEdit = () => {
   // }, []);
   return (
     <Edit saveButtonProps={saveButtonProps} isLoading={formLoading}>
-      <Form
-        {...formProps}
-        layout="vertical"
-        initialValues={{
-          editedBy: username,
-        }}
-      >
+      <Form {...formProps} layout="vertical">
         <Form.Item
           label={"Job Card Number"}
           name={["jobcardnumber"]}
