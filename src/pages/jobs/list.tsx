@@ -80,7 +80,7 @@ export const JobList = () => {
               <Select
                 defaultValue={text}
                 onChange={(value) => handleStatusChange(record, value)}
-                style={{ width: "80%" }}
+                style={{ width: "100%" }}
               >
                 {status.map((s) => (
                   <Select.Option key={s._id} value={s.status}>
