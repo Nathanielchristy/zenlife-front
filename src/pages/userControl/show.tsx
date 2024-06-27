@@ -22,6 +22,10 @@ export const UserShow = () => {
     <Show isLoading={isLoading}>
       <Title level={5}>{"Name"}</Title>
       <TextField value={record?.name} />
+      <Title level={5}>{"Email"}</Title>
+      <TextField value={record?.email} />
+      <Title level={5}>{"Role"}</Title>
+      <TextField value={record?.role} />
     </Show>
   );
 };
