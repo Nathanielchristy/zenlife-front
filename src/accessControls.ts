@@ -28,11 +28,11 @@ p, admin, dashboard/*, (edit)|(show)|(delete)
 p, admin, dashboard/*, field
 
 p, admin, users, (list)|(create)
-p, admin, users/*, (edit)|(show)|(delete)
+p, admin, users/*, (edit)|(show)
 p, admin, users/*, field
 
 p, admin, notifications, (list)|(create)
-p, admin, notifications/*, (edit)|(show)|(delete)
+p, admin, notifications/*, (edit)|(show)
 p, admin, notifications/*, field
 
 p, EMPLOYEE, jobs, (list)|(create)
@@ -40,19 +40,19 @@ p, EMPLOYEE, jobs/*, (edit)|(show)
 p, EMPLOYEE, jobs/hit, field, deny
 
 p, ProjectCoordinator, jobs, (list)|(create)
-p, ProjectCoordinator, jobs/*, (edit)|(show)|(delete)
+p, ProjectCoordinator, jobs/*, (edit)|(show)
 p, ProjectCoordinator, jobs/*, field
 
 p, salescoordinator, jobs, (list)|(create)
-p, salescoordinator, jobs/*, (edit)|(show)|(delete)
+p, salescoordinator, jobs/*, (edit)|(show)
 p, salescoordinator, jobs/*, field
 
 p, Designer, jobs, (list)|(create)
-p, Designer, jobs/*, (edit)|(show)|(delete)
+p, Designer, jobs/*, (edit)|(show)
 p, Designer, jobs/*, field
 
 p, ProjectManager-Sales, jobs, (list)|(create)
-p, ProjectManager-Sales, jobs/*, (edit)|(show)|(delete)
+p, ProjectManager-Sales, jobs/*, (edit)|(show)
 p, ProjectManager-Sales, jobs/*, field
 
 p, Production, jobs, (list)
