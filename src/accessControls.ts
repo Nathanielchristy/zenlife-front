@@ -28,7 +28,7 @@ p, admin, dashboard/*, (edit)|(show)|(delete)
 p, admin, dashboard/*, field
 
 p, admin, users, (list)|(create)
-p, admin, users/*, (edit)|(show)
+p, admin, users/*, (edit)|(show)|(delete)
 p, admin, users/*, field
 
 p, admin, notifications, (list)|(create)

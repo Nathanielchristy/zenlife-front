@@ -24,7 +24,14 @@ export const JobEdit = () => {
   // const [salesCoordinator, setSalesCoordinator] = useState<any[]>([]);
   const username = localStorage.getItem("Username");
   let status = queryResult?.data?.data || [];
-  if (userRole === "Production") {
+
+  if (userRole === "Designer") {
+    status = [
+      { _id: "1", status: "Job Created" },
+      { _id: "2", status: "File preperation" },
+      { _id: "3", status: "File sent for printing" },
+    ];
+  } else if (userRole === "Production") {
     status = [
       { _id: "1", status: "Ready for Delivery" },
       { _id: "2", status: "Ready for Site" },
@@ -32,9 +39,14 @@ export const JobEdit = () => {
     ];
   } else if (userRole === "Printing") {
     status = [
-      { _id: "1", status: "Ready for Delivert" },
+      { _id: "1", status: "Ready for Delivery" },
       { _id: "2", status: "Ready for Production" },
       { _id: "3", status: "Completed" },
+    ];
+  } else if (userRole === "Accounts" || userRole === "Accounts Assistant") {
+    status = [
+      { _id: "1", status: "Estimate Prepared" },
+      { _id: "2", status: "Invoice Prepared" },
     ];
   }
 
@@ -263,6 +275,30 @@ export const JobEdit = () => {
           ]}
         >
           <TextArea rows={4} />
+        </Form.Item>
+        <Form.Item
+          label={"Additional Info"}
+          name={["additionalinfo"]}
+          rules={[
+            {
+              required: false,
+              message: "Please input the Additional Info!",
+            },
+          ]}
+        >
+          <TextArea rows={4} />
+        </Form.Item>
+        <Form.Item
+          label={"Reprint"}
+          name={["reprintinfo"]}
+          rules={[
+            {
+              required: false,
+              message: "Please input the Reprint Info!",
+            },
+          ]}
+        >
+          <TextArea rows={2} />
         </Form.Item>
 
         <Form.Item

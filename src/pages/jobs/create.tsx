@@ -268,11 +268,35 @@ export const JobCreate = () => {
         >
           <Input.TextArea />
         </Form.Item>
+        <Form.Item
+          label={"Additional Info"}
+          name={["additionalinfo"]}
+          rules={[
+            {
+              required: false,
+              message: "Please input the Additional Info!",
+            },
+          ]}
+        >
+          <Input.TextArea />
+        </Form.Item>
+        <Form.Item
+          label={"Reprint"}
+          name={["reprintinfo"]}
+          rules={[
+            {
+              required: false,
+              message: "Please input the Reprint Info!",
+            },
+          ]}
+        >
+          <Input.TextArea />
+        </Form.Item>
 
         <Form.Item
           label={"Job Status"}
           name={["jobstatus"]}
-          initialValue={"Unassigned"}
+          initialValue={"Job Created"}
           rules={[
             {
               required: false,
@@ -280,7 +304,7 @@ export const JobCreate = () => {
             },
           ]}
         >
-          <Select defaultValue="Unassigned" style={{ width: "50%" }}>
+          <Select defaultValue="Job Created" style={{ width: "50%" }}>
             {status.map((s) => (
               <Select.Option key={s._id} value={s.status}>
                 {s.status}

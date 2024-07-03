@@ -33,7 +33,7 @@ export const JobList = () => {
   const { queryResult } = useSelect<IStatus>({
     resource: "jobstatus",
   });
-  const status = queryResult?.data?.data || [];
+  let status = queryResult?.data?.data || [];
   const filter_status = queryResult?.data?.data || [];
   const { mutate: updateJobStatus } = useUpdate();
   const userRole = sessionStorage.getItem("userRole");
@@ -57,6 +57,30 @@ export const JobList = () => {
       }
     );
   };
+  if (userRole === "Designer") {
+    status = [
+      { _id: "1", status: "Job Created" },
+      { _id: "2", status: "File preperation" },
+      { _id: "3", status: "File sent for printing" },
+    ];
+  } else if (userRole === "Production") {
+    status = [
+      { _id: "1", status: "Ready for Delivery" },
+      { _id: "2", status: "Ready for Site" },
+      { _id: "3", status: "Completed" },
+    ];
+  } else if (userRole === "Printing") {
+    status = [
+      { _id: "1", status: "Ready for Delivery" },
+      { _id: "2", status: "Ready for Production" },
+      { _id: "3", status: "Completed" },
+    ];
+  } else if (userRole === "Accounts" || userRole === "Accounts Assistant") {
+    status = [
+      { _id: "1", status: "Estimate Prepared" },
+      { _id: "2", status: "Invoice Prepared" },
+    ];
+  }
   return (
     <List>
       <Table
@@ -72,6 +96,7 @@ export const JobList = () => {
         <Table.Column dataIndex="jobcardnumber" title="Job Card Number" />
         <Table.Column dataIndex="clientname" title="Client Name" />
         <Table.Column dataIndex="jobname" title="Job Name" />
+        <Table.Column dataIndex="invoiceno" title="Estimate Number" />
 
         <Table.Column
           dataIndex="jobstatus"
