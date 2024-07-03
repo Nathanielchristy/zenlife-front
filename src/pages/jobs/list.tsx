@@ -34,6 +34,7 @@ export const JobList = () => {
     resource: "jobstatus",
   });
   const status = queryResult?.data?.data || [];
+  const filter_status = queryResult?.data?.data || [];
   const { mutate: updateJobStatus } = useUpdate();
   const userRole = sessionStorage.getItem("userRole");
   const username = localStorage.getItem("Username");
@@ -75,6 +76,11 @@ export const JobList = () => {
         <Table.Column
           dataIndex="jobstatus"
           title="Job Status"
+          filters={filter_status.map((s) => ({
+            text: s.status,
+            value: s.status,
+          }))}
+          onFilter={(value, record) => record.jobstatus === value}
           render={(text: string, record: BaseRecord) =>
             userRole === "admin" || userRole === "manager" ? (
               <Select
@@ -97,7 +103,9 @@ export const JobList = () => {
         <Table.Column
           dataIndex="createdAt"
           title="Created At"
-          render={(value: any) => <DateField value={value} />}
+          render={(value: any) => (
+            <DateField value={value} format="DD/MM/YYYY" />
+          )}
         />
         <Table.Column
           title="Actions"
