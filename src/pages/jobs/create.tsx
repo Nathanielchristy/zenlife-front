@@ -268,7 +268,7 @@ export const JobCreate = () => {
         >
           <Input.TextArea />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           label={"Additional Info"}
           name={["additionalinfo"]}
           rules={[
@@ -291,7 +291,7 @@ export const JobCreate = () => {
           ]}
         >
           <Input.TextArea />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           label={"Job Status"}
