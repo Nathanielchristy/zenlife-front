@@ -1,5 +1,5 @@
 import { Edit, useForm, useSelect } from "@refinedev/antd";
-import { Form, Input, InputNumber, Select } from "antd";
+import { Form, Input, InputNumber, Radio, Select } from "antd";
 const { TextArea } = Input;
 import { axiosInstance } from "../../authProvider";
 import React, { useState, useEffect } from "react";
@@ -289,16 +289,43 @@ export const JobEdit = () => {
           <TextArea rows={4} />
         </Form.Item>
         <Form.Item
-          label={"Reprint"}
-          name={["reprintinfo"]}
+          label="Reprint"
+          name="option"
           rules={[
             {
-              required: false,
-              message: "Please input the Reprint Info!",
+              required: true,
+              message: "Please select an option!",
             },
           ]}
         >
-          <TextArea rows={2} />
+          <Radio.Group>
+            <Radio value="yes">Yes</Radio>
+            <Radio value="no">No</Radio>
+          </Radio.Group>
+        </Form.Item>
+
+        <Form.Item
+          shouldUpdate={(prevValues, currentValues) =>
+            prevValues.option !== currentValues.option
+          }
+          noStyle
+        >
+          {({ getFieldValue }) => {
+            return getFieldValue("option") === "yes" ? (
+              <Form.Item
+                label="Reason"
+                name="reprintinfo"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input the Reprint Info!",
+                  },
+                ]}
+              >
+                <TextArea rows={4} />
+              </Form.Item>
+            ) : null;
+          }}
         </Form.Item>
 
         <Form.Item
