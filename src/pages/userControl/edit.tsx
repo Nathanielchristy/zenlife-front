@@ -4,11 +4,24 @@ import MDEditor from "@uiw/react-md-editor";
 import { Button, Form, Input, InputNumber, Select, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { useState } from "react";
+interface IRole {
+  _id: string;
+  title: string;
+}
 
 export const UserEdit = () => {
   useDocumentTitle("Users | Zenith");
-  const { formProps, saveButtonProps, queryResult, formLoading } = useForm({});
+  const { formProps, saveButtonProps, formLoading } = useForm({});
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const { queryResult } = useSelect<IRole>({
+    resource: "roles",
+  });
+  interface IRole {
+    _id: string;
+    title: string;
+  }
+
+  const roles = queryResult?.data?.data || [];
   return (
     <Edit saveButtonProps={saveButtonProps} isLoading={formLoading}>
       <Form {...formProps} layout="vertical">
@@ -46,37 +59,23 @@ export const UserEdit = () => {
             }}
           />
         </Form.Item>
-        <FormItem label={"Role"} name={"role"}>
-          <Select
-            defaultValue="Employee"
-            // style={{
-            //   width: 00,
-            // }}
-            //   onChange={handleChange}
-            options={[
-              {
-                value: "designer",
-                label: "Designer",
-              },
-              {
-                value: "salescoordinator",
-                label: "Sales - Coordinator",
-              },
-              {
-                value: "productionsupervisor",
-                label: "Production - Supervisor",
-              },
-              {
-                value: "printer",
-                label: "Printer",
-              },
-              {
-                value: "sitecoordinator",
-                label: "Site - Coordinator",
-              },
-            ]}
-          />
-        </FormItem>
+        <Form.Item
+          label="Role"
+          name={"role"}
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        >
+          <Select>
+            {roles.map((role) => (
+              <Select.Option key={role.title} value={role.title}>
+                {role.title}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
       </Form>
     </Edit>
   );

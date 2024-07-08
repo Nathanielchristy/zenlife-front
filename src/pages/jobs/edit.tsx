@@ -155,7 +155,7 @@ export const JobEdit = () => {
             },
           ]}
         >
-          <InputNumber />
+          <Input />
         </Form.Item>
 
         <Form.Item
@@ -317,7 +317,7 @@ export const JobEdit = () => {
                 name="reprintinfo"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Please input the Reprint Info!",
                   },
                 ]}

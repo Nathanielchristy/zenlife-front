@@ -106,23 +106,19 @@ export const JobList = () => {
             value: s.status,
           }))}
           onFilter={(value, record) => record.jobstatus === value}
-          render={(text: string, record: BaseRecord) =>
-            userRole === "admin" || userRole === "manager" ? (
-              <Select
-                defaultValue={text}
-                onChange={(value) => handleStatusChange(record, value)}
-                style={{ width: "100%" }}
-              >
-                {status.map((s) => (
-                  <Select.Option key={s._id} value={s.status}>
-                    {s.status}
-                  </Select.Option>
-                ))}
-              </Select>
-            ) : (
-              text
-            )
-          }
+          render={(text: string, record: BaseRecord) => (
+            <Select
+              defaultValue={text}
+              onChange={(value) => handleStatusChange(record, value)}
+              style={{ width: "100%" }}
+            >
+              {status.map((s) => (
+                <Select.Option key={s._id} value={s.status}>
+                  {s.status}
+                </Select.Option>
+              ))}
+            </Select>
+          )}
         />
         <Table.Column dataIndex="editedBy" title="Updated By" />
         <Table.Column

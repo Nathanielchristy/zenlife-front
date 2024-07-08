@@ -1,5 +1,5 @@
 import { Create, useForm, useSelect } from "@refinedev/antd";
-import { Form, Input, InputNumber, Select } from "antd";
+import { Form, Input, InputNumber, Radio, Select } from "antd";
 import { axiosInstance } from "../../authProvider";
 import { useEffect, useState } from "react";
 
@@ -268,7 +268,7 @@ export const JobCreate = () => {
         >
           <Input.TextArea />
         </Form.Item>
-        {/* <Form.Item
+        <Form.Item
           label={"Additional Info"}
           name={["additionalinfo"]}
           rules={[
@@ -281,17 +281,44 @@ export const JobCreate = () => {
           <Input.TextArea />
         </Form.Item>
         <Form.Item
-          label={"Reprint"}
-          name={["reprintinfo"]}
+          label="Reprint"
+          name="option"
           rules={[
             {
-              required: false,
-              message: "Please input the Reprint Info!",
+              required: true,
+              message: "Please select an option!",
             },
           ]}
         >
-          <Input.TextArea />
-        </Form.Item> */}
+          <Radio.Group>
+            <Radio value="yes">Yes</Radio>
+            <Radio value="no">No</Radio>
+          </Radio.Group>
+        </Form.Item>
+
+        <Form.Item
+          shouldUpdate={(prevValues, currentValues) =>
+            prevValues.option !== currentValues.option
+          }
+          noStyle
+        >
+          {({ getFieldValue }) => {
+            return getFieldValue("option") === "yes" ? (
+              <Form.Item
+                label="Reason"
+                name="reprintinfo"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input the Reprint Info!",
+                  },
+                ]}
+              >
+                <Input.TextArea rows={4} />
+              </Form.Item>
+            ) : null;
+          }}
+        </Form.Item>
 
         <Form.Item
           label={"Job Status"}
