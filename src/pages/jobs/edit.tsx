@@ -293,7 +293,7 @@ export const JobEdit = () => {
           name="option"
           rules={[
             {
-              required: true,
+              required: false,
               message: "Please select an option!",
             },
           ]}
