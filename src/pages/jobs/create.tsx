@@ -285,7 +285,7 @@ export const JobCreate = () => {
           name="option"
           rules={[
             {
-              required: true,
+              required: false,
               message: "Please select an option!",
             },
           ]}
