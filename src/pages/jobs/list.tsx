@@ -108,7 +108,7 @@ export const JobList = () => {
           onFilter={(value, record) => record.jobstatus === value}
           render={(text: string, record: BaseRecord) => (
             <Select
-              defaultValue={text}
+              defaultValue={record.jobstatus}
               onChange={(value) => handleStatusChange(record, value)}
               style={{ width: "100%" }}
             >

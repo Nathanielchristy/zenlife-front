@@ -52,7 +52,7 @@ const liveProvider = (client: Ably.Realtime): LiveProvider => {
 
     publish: (event: LiveEvent) => {
       const channelInstance = client.channels.get(event.channel);
-
+      console.log(event);
       channelInstance.publish(event.type, event);
     },
   };

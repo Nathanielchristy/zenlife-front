@@ -93,7 +93,7 @@ export const JobShow = () => {
   const statusValues = useMemo(
     () => [
       "Job Created",
-      "File preparation",
+      "File preperation",
       "File sent for printing",
       "Printing",
       "Ready for Production",
@@ -103,16 +103,38 @@ export const JobShow = () => {
     ],
     []
   );
+  const formatDate = (dateString: string | number | Date): string => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    };
+
+    return new Date(dateString).toLocaleString("en-GB", options);
+  };
 
   const currentStatusIndex = useMemo(
     () => statusValues.indexOf(record?.jobstatus),
     [record?.jobstatus, statusValues]
   );
+  console.log(record?.statusHistory);
 
-  const items = statusValues.map((status, index) => ({
-    title: status,
-    // description: record?.jobstatus === status ? `Job ${record?.jobstatus}` : "",
-  }));
+  const items = statusValues.map((status) => {
+    const matchedRecord = record?.statusHistory.find(
+      (detail: { jobstatus: string }) => detail.jobstatus === status
+    );
+    return {
+      title: status,
+      description: matchedRecord
+        ? `${matchedRecord.jobstatus} by ${
+            matchedRecord.editedBy
+          } at ${formatDate(matchedRecord.updatedAt)}`
+        : "Status Not Updated Properly",
+    };
+  });
 
   return (
     <Show>
