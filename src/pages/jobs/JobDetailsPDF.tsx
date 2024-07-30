@@ -85,7 +85,7 @@ interface StatusHistory {
 }
 
 interface PdfProps {
-  record: {
+  record?: {
     jobname?: string;
     clientname?: string;
     salescoordinator?: string;
@@ -97,11 +97,11 @@ interface PdfProps {
     sitecoordinator?: string;
     installationteam?: string;
     sitelocation?: string;
-    statusHistory: StatusHistory[];
+    statusHistory?: StatusHistory[]; // Make this optional
   };
 }
 
-const PdfLayout = ({ record }: PdfProps) => {
+const PdfLayout = ({ record }: any) => {
   const formatDate = (date: string | number | Date) => {
     const d = new Date(date);
     return d.toLocaleDateString();
@@ -174,13 +174,22 @@ const PdfLayout = ({ record }: PdfProps) => {
               <Text style={styles.subtitle}>Status History</Text>
               <View style={styles.divider} />
               {record?.statusHistory && record.statusHistory.length > 0 ? (
-                record.statusHistory.map((status, index) => (
-                  <Text key={index} style={styles.text}>
-                    {`${formatDate(status.updatedAt)} - ${
-                      status.jobstatus
-                    } (Edited by: ${status.editedBy})`}
-                  </Text>
-                ))
+                record.statusHistory.map(
+                  (
+                    status: {
+                      updatedAt: string | number | Date;
+                      jobstatus: any;
+                      editedBy: any;
+                    },
+                    index: React.Key | null | undefined
+                  ) => (
+                    <Text key={index} style={styles.text}>
+                      {`${formatDate(status.updatedAt)} - ${
+                        status.jobstatus
+                      } (Edited by: ${status.editedBy})`}
+                    </Text>
+                  )
+                )
               ) : (
                 <Text style={styles.text}>No status history available</Text>
               )}
