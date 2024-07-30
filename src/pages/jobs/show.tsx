@@ -7,6 +7,8 @@ import {
   Typography,
   Grid,
   Steps,
+  Button,
+  Modal,
 } from "antd";
 import {
   UserOutlined,
@@ -14,11 +16,13 @@ import {
   TeamOutlined,
   GlobalOutlined,
   FileMarkdownOutlined,
+  FilePdfOutlined,
 } from "@ant-design/icons";
-import { useShow } from "@refinedev/core";
+import { useModal, useShow } from "@refinedev/core";
 import { useMemo } from "react";
 import { Show } from "@refinedev/antd";
 import { useDocumentTitle } from "@refinedev/react-router-v6";
+import PdfLayout from "./JobDetailsPDF";
 
 const { Title } = Typography;
 
@@ -28,6 +32,8 @@ export const JobShow = () => {
   const { data, isLoading } = queryResult;
   const record = data?.data;
   const breakpoints = Grid.useBreakpoint();
+
+  const { show, visible, close } = useModal();
 
   const details = useMemo(() => {
     const list = [
@@ -142,7 +148,6 @@ export const JobShow = () => {
         <Title level={4}>Job Details</Title>
         <Row gutter={24}>
           <Col xs={24} lg={16}>
-            {/* Conditional rendering based on xs breakpoint */}
             {breakpoints.xs ? (
               <Descriptions bordered={breakpoints.lg} layout="vertical">
                 {details.map((item, index) => (
@@ -186,6 +191,18 @@ export const JobShow = () => {
             />
           </Col>
         </Row>
+        <Button
+          size="large"
+          onClick={() => {
+            show();
+          }}
+          value={"View"}
+        >
+          View PDF
+        </Button>
+        <Modal visible={visible} onCancel={close} width="80%" footer={null}>
+          <PdfLayout record={record} />
+        </Modal>
       </Card>
     </Show>
   );
