@@ -69,13 +69,19 @@ export const JobList = () => {
       { _id: "2", status: "Ready for Site" },
       { _id: "3", status: "Completed" },
     ];
-  } else if (userRole === "Printing") {
+  } else if (userRole === "Printer") {
     status = [
       { _id: "1", status: "Ready for Delivery" },
       { _id: "2", status: "Ready for Production" },
       { _id: "3", status: "Completed" },
     ];
-  } else if (userRole === "Accounts" || userRole === "Accounts Assistant") {
+  } else if (userRole === "Accounts") {
+    status = [
+      { _id: "1", status: "Estimate Prepared" },
+      { _id: "2", status: "Invoice Prepared" },
+      { _id: "2", status: "Invoice Sent to Client" },
+    ];
+  } else if (userRole === "Accounts Assistant") {
     status = [
       { _id: "1", status: "Estimate Prepared" },
       { _id: "2", status: "Invoice Prepared" },
@@ -89,6 +95,13 @@ export const JobList = () => {
     status = [
       { _id: "1", status: "Job Created" },
       { _id: "2", status: "Completed" },
+    ];
+  } else if (userRole === "ProjectCoordinator") {
+    status = [
+      { _id: "1", status: "Ready for Delivery" },
+      { _id: "2", status: "Ready for Production" },
+      { _id: "3", status: "Ready for Site" },
+      { _id: "4", status: "Completed" },
     ];
   }
   return (
