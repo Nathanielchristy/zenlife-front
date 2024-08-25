@@ -80,6 +80,16 @@ export const JobList = () => {
       { _id: "1", status: "Estimate Prepared" },
       { _id: "2", status: "Invoice Prepared" },
     ];
+  } else if (userRole === "Sales Executive") {
+    status = [
+      { _id: "1", status: "Job Created" },
+      { _id: "2", status: "Completed" },
+    ];
+  } else if (userRole === "Project Manager") {
+    status = [
+      { _id: "1", status: "Job Created" },
+      { _id: "2", status: "Completed" },
+    ];
   }
   return (
     <List>
