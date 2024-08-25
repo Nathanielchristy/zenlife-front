@@ -54,6 +54,23 @@ export const JobEdit = () => {
       { _id: "1", status: "Estimate Prepared" },
       { _id: "2", status: "Invoice Prepared" },
     ];
+  } else if (userRole === "Sales Executive") {
+    status = [
+      { _id: "1", status: "Job Created" },
+      { _id: "2", status: "Completed" },
+    ];
+  } else if (userRole === "Project Manager") {
+    status = [
+      { _id: "1", status: "Job Created" },
+      { _id: "2", status: "Completed" },
+    ];
+  } else if (userRole === "ProjectCoordinator") {
+    status = [
+      { _id: "1", status: "Ready for Delivery" },
+      { _id: "2", status: "Ready for Production" },
+      { _id: "3", status: "Ready for Site" },
+      { _id: "4", status: "Completed" },
+    ];
   }
 
   // useEffect(() => {
