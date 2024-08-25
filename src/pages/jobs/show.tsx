@@ -127,6 +127,7 @@ export const JobShow = () => {
     [record?.jobstatus, statusValues]
   );
   console.log(record?.statusHistory);
+  console.log(statusValues[currentStatusIndex]);
 
   const items = statusValues.map((status) => {
     const matchedRecord = record?.statusHistory.find(
@@ -141,6 +142,7 @@ export const JobShow = () => {
         : "Status Not Updated Properly",
     };
   });
+  const isCompleted = statusValues[currentStatusIndex] === "Completed";
 
   return (
     <Show>
@@ -191,18 +193,29 @@ export const JobShow = () => {
             />
           </Col>
         </Row>
-        <Button
-          size="large"
-          onClick={() => {
-            show();
-          }}
-          value={"View"}
-        >
-          View PDF
-        </Button>
-        <Modal visible={visible} onCancel={close} width="80%" footer={null}>
-          <PdfLayout record={record} />
-        </Modal>
+        <>
+          {isCompleted && (
+            <>
+              <Button
+                size="large"
+                onClick={() => {
+                  show();
+                }}
+                value={"View"}
+              >
+                View PDF
+              </Button>
+              <Modal
+                visible={visible}
+                onCancel={close}
+                width="80%"
+                footer={null}
+              >
+                <PdfLayout record={record} />
+              </Modal>
+            </>
+          )}
+        </>
       </Card>
     </Show>
   );
