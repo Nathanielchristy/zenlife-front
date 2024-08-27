@@ -56,7 +56,7 @@ p, Sales Executive, jobs, (list)|(create)
 p, Sales Executive, jobs/*, (edit)|(show)
 p, Sales Executive, jobs/*, field
 
-p, Project Manager, jobs, (list)|(create)|(delete)
+p, Project Manager, jobs, (list)|(create)
 p, Project Manager, jobs/*, (edit)|(show)
 p, Project Manager, jobs/*, field
 
