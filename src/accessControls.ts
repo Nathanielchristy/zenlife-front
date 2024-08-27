@@ -60,6 +60,14 @@ p, Project Manager, jobs, (list)|(create)
 p, Project Manager, jobs/*, (edit)|(show)
 p, Project Manager, jobs/*, field
 
+p, Accounts, jobs, (list)|(create)
+p, Accounts, jobs/*, (edit)|(show)
+p, Accounts, jobs/*, field
+
+p, Accounts Assistant, jobs, (list)|(create)
+p, Accounts Assistant, jobs/*, (edit)|(show)
+p, Accounts Assistant, jobs/*, field
+
 p, Production, jobs, (list)
 p, Production, jobs/*, (edit)|(show)
 p, Production, jobs/*, field
