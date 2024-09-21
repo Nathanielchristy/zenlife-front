@@ -117,6 +117,11 @@ const PdfLayout = ({ record }: any) => {
               <Text style={styles.title}>{`Job Name: ${
                 record?.jobname || "N/A"
               }`}</Text>
+              <View style={styles.divider} />
+              <Text style={styles.subtitle}>{`Job Card Number - ${
+                record?.jobcardnumber || "N/A"
+              }`}</Text>
+              <View style={styles.divider} />
               <Text style={styles.subtitle}>Client Details</Text>
               <View style={styles.divider} />
               <Text style={styles.text}>{`Client Name: ${
