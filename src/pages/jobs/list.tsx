@@ -22,9 +22,9 @@ export const JobList = () => {
   const { data: user } = useGetIdentity<IUser>();
   const { tableProps } = useTable({
     syncWithLocation: true,
-    // pagination: {
-    //   pageSize: 10,
-    // },
+    pagination: {
+      pageSize: 20,
+    },
   });
   interface IStatus {
     _id: string;
@@ -109,10 +109,12 @@ export const JobList = () => {
       <Table
         {...tableProps}
         rowKey="_id"
+        size="small"
         pagination={{
           ...tableProps.pagination,
+          pageSize: 20,
           position: ["bottomRight"],
-          size: "default",
+          size: "small",
         }}
       >
         {/* <Table.Column dataIndex="_id" title="ID" /> */}
