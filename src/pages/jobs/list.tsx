@@ -22,9 +22,9 @@ export const JobList = () => {
   const { data: user } = useGetIdentity<IUser>();
   const { tableProps } = useTable({
     syncWithLocation: true,
-    pagination: {
-      pageSize: 20,
-    },
+    // pagination: {
+    //   pageSize: 20,
+    // },
   });
   interface IStatus {
     _id: string;
@@ -112,7 +112,6 @@ export const JobList = () => {
         size="small"
         pagination={{
           ...tableProps.pagination,
-          pageSize: 20,
           position: ["bottomRight"],
           size: "small",
         }}
