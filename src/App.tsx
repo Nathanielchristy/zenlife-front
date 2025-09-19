@@ -58,7 +58,7 @@ import { DashList } from "./pages/dashboard";
 import { ablyClient } from "./utility/ablyClient";
 import { liveProvider } from "./liveprovider";
 
-const API_URL = "http://3.29.90.15:5000/api";
+const API_URL = "https://zenlife-back.onrender.com//api";
 
 function App() {
   const initialRole = sessionStorage.getItem("userRole") || "guest";

@@ -7,8 +7,8 @@ import { io, Socket } from "socket.io-client";
 export const TOKEN_KEY = "refine-auth";
 export const SOCKET_KEY = "refine-socket";
 
-const backendMainURL = "http://3.29.90.15:5000"; // Replace this with your actual backend URL
-const backendUrl = "http://3.29.90.15:5000/api"; // Replace this with your actual backend URL
+const backendMainURL = "https://zenlife-back.onrender.com/"; // Replace this with your actual backend URL
+const backendUrl = "https://zenlife-back.onrender.com//api"; // Replace this with your actual backend URL
 
 // Create an Axios instance with default configurations
 export const axiosInstance: AxiosInstance = axios.create({
